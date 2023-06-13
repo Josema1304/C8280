@@ -652,4 +652,4239 @@ mask = (z1 % 2 == 0)
 
 # Sum the masking matrix
 sum_mask = np.sum(mask)
-print(sum_mask)
+
+PANDAS
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Josema1304/C8280/blob/main/Pandas.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "raUVz0R49bqt"
+      },
+      "source": [
+        "### Pandas\n",
+        "\n",
+        "\n",
+        "Pandas es un paquete Python de código abierto que proporciona estructuras de datos rápidas, flexibles y expresivas diseñadas para que trabajar con datos \"relacionales\" o \"etiquetados\" sea fácil e intuitivo.\n",
+        "\n",
+        "### Estructuras de datos\n",
+        "Pandas presenta dos nuevas estructuras de datos en Python: Series y DataFrame, ambas construidas sobre NumPy (esto significa que es rápido).\n",
+        "\n",
+        "\n",
+        "#### Serie\n",
+        "\n",
+        "Este es un objeto unidimensional similar a la columna en una hoja de cálculo o tabla SQL. De forma predeterminada, a cada elemento se le asignará una etiqueta de índice de `0` a `N`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "_6Ivxpg87Xpu"
+      },
+      "outputs": [],
+      "source": [
+        "import pandas as pd\n",
+        "import numpy as np\n",
+        "import matplotlib.pyplot as plt"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "El1ASrOeAMve",
+        "outputId": "00f32dbf-101f-4674-d334-ad72f28ae66f"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "A    1.0\n",
+            "B    3.0\n",
+            "C    4.0\n",
+            "D    NaN\n",
+            "E    5.0\n",
+            "F    6.0\n",
+            "dtype: float64\n"
+          ]
+        }
+      ],
+      "source": [
+        "s = pd.Series([1,3,4,np.nan, 5, 6], index = ['A', 'B', 'C', 'D', 'E', 'F'])\n",
+        "print(s)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "1V0ty8qDAwC8"
+      },
+      "source": [
+        "Si creas una serie utilizando el diccionario, la clave se convertirá en el índice de forma predeterminada."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Gavd17DGAgfV",
+        "outputId": "8741ac46-7e24-43af-b07c-9367297d5f75"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "{'A': 1, 'B': 2, 'C': 3, 'D': nan, 'E': 5, 'F': 6}"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 7
+        }
+      ],
+      "source": [
+        "dict_ejemplo = {'A': 1, 'B':2, 'C':3, 'D':np.nan, 'E': 5, 'F': 6}\n",
+        "dict_ejemplo"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "EDXTx0FlBTHj",
+        "outputId": "3320432f-738b-4e17-a8fc-16993d80627f"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "A    1.0\n",
+            "B    2.0\n",
+            "C    3.0\n",
+            "D    NaN\n",
+            "E    5.0\n",
+            "F    6.0\n",
+            "dtype: float64\n"
+          ]
+        }
+      ],
+      "source": [
+        "s = pd.Series(dict_ejemplo)\n",
+        "print(s)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "8p_C9yiMIG2B"
+      },
+      "source": [
+        "La contraparte bidimensional de las series unidimensionales es el DataFrame."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "khVQ3e1FBrPA"
+      },
+      "source": [
+        "### DataFrame\n",
+        "\n",
+        "Es un objeto bidimensional similar a una hoja de cálculo o una tabla SQL. Este es el objeto Pandas más utilizado.\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 143
+        },
+        "id": "HEEaxqFvBZeK",
+        "outputId": "a325f43b-ff14-433b-d298-fd316f3ce4c5"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "  Emp_ID Genero  Edad\n",
+              "0    E01      F    25\n",
+              "1    E02      M    27\n",
+              "2    E03      M    25"
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-f5f4dfbf-cfb7-4dfc-9560-f0fa5bb6fb78\">\n",
+              "    <div class=\"colab-df-container\">\n",
+              "      <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Emp_ID</th>\n",
+              "      <th>Genero</th>\n",
+              "      <th>Edad</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>E01</td>\n",
+              "      <td>F</td>\n",
+              "      <td>25</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>E02</td>\n",
+              "      <td>M</td>\n",
+              "      <td>27</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>E03</td>\n",
+              "      <td>M</td>\n",
+              "      <td>25</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "      <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-f5f4dfbf-cfb7-4dfc-9560-f0fa5bb6fb78')\"\n",
+              "              title=\"Convert this dataframe to an interactive table.\"\n",
+              "              style=\"display:none;\">\n",
+              "        \n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\"viewBox=\"0 0 24 24\"\n",
+              "       width=\"24px\">\n",
+              "    <path d=\"M0 0h24v24H0V0z\" fill=\"none\"/>\n",
+              "    <path d=\"M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z\"/><path d=\"M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z\"/>\n",
+              "  </svg>\n",
+              "      </button>\n",
+              "      \n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      flex-wrap:wrap;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "      <script>\n",
+              "        const buttonEl =\n",
+              "          document.querySelector('#df-f5f4dfbf-cfb7-4dfc-9560-f0fa5bb6fb78 button.colab-df-convert');\n",
+              "        buttonEl.style.display =\n",
+              "          google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "        async function convertToInteractive(key) {\n",
+              "          const element = document.querySelector('#df-f5f4dfbf-cfb7-4dfc-9560-f0fa5bb6fb78');\n",
+              "          const dataTable =\n",
+              "            await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                     [key], {});\n",
+              "          if (!dataTable) return;\n",
+              "\n",
+              "          const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "            '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "            + ' to learn more about interactive tables.';\n",
+              "          element.innerHTML = '';\n",
+              "          dataTable['output_type'] = 'display_data';\n",
+              "          await google.colab.output.renderOutput(dataTable, element);\n",
+              "          const docLink = document.createElement('div');\n",
+              "          docLink.innerHTML = docLinkHtml;\n",
+              "          element.appendChild(docLink);\n",
+              "        }\n",
+              "      </script>\n",
+              "    </div>\n",
+              "  </div>\n",
+              "  "
+            ]
+          },
+          "metadata": {},
+          "execution_count": 9
+        }
+      ],
+      "source": [
+        "data = {'Genero': ['F', 'M', 'M'],\n",
+        "        'Emp_ID': ['E01', 'E02', 'E03'],\n",
+        "        'Edad': [25, 27, 25]}\n",
+        "# Si queremos el orden de las columnas, especificamos en el parametro columns\n",
+        "df = pd.DataFrame(data, columns=['Emp_ID', 'Genero', 'Edad'])\n",
+        "df"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "VJvTVteQCuY6"
+      },
+      "source": [
+        "#### Lectura y escritura de datos\n",
+        "\n",
+        "Veremos tres formatos de archivo de uso común: csv, archivo de texto y Excel."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 245
+        },
+        "id": "XCMbYN2TEmXV",
+        "outputId": "cb8d1561-89c5-420c-938f-962b2dbdde7f"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "               model   mpg  cyl   disp   hp  drat     wt   qsec  vs  am  gear  \\\n",
+              "0          Mazda RX4  21.0    6  160.0  110  3.90  2.620  16.46   0   1     4   \n",
+              "1      Mazda RX4 Wag  21.0    6  160.0  110  3.90  2.875  17.02   0   1     4   \n",
+              "2         Datsun 710  22.8    4  108.0   93  3.85  2.320  18.61   1   1     4   \n",
+              "3     Hornet 4 Drive  21.4    6  258.0  110  3.08  3.215  19.44   1   0     3   \n",
+              "4  Hornet Sportabout  18.7    8  360.0  175  3.15  3.440  17.02   0   0     3   \n",
+              "\n",
+              "   carb  \n",
+              "0     4  \n",
+              "1     4  \n",
+              "2     1  \n",
+              "3     1  \n",
+              "4     2  "
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-2dc51fda-1e41-42db-a5c0-6076a85fa49a\">\n",
+              "    <div class=\"colab-df-container\">\n",
+              "      <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>model</th>\n",
+              "      <th>mpg</th>\n",
+              "      <th>cyl</th>\n",
+              "      <th>disp</th>\n",
+              "      <th>hp</th>\n",
+              "      <th>drat</th>\n",
+              "      <th>wt</th>\n",
+              "      <th>qsec</th>\n",
+              "      <th>vs</th>\n",
+              "      <th>am</th>\n",
+              "      <th>gear</th>\n",
+              "      <th>carb</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>Mazda RX4</td>\n",
+              "      <td>21.0</td>\n",
+              "      <td>6</td>\n",
+              "      <td>160.0</td>\n",
+              "      <td>110</td>\n",
+              "      <td>3.90</td>\n",
+              "      <td>2.620</td>\n",
+              "      <td>16.46</td>\n",
+              "      <td>0</td>\n",
+              "      <td>1</td>\n",
+              "      <td>4</td>\n",
+              "      <td>4</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>Mazda RX4 Wag</td>\n",
+              "      <td>21.0</td>\n",
+              "      <td>6</td>\n",
+              "      <td>160.0</td>\n",
+              "      <td>110</td>\n",
+              "      <td>3.90</td>\n",
+              "      <td>2.875</td>\n",
+              "      <td>17.02</td>\n",
+              "      <td>0</td>\n",
+              "      <td>1</td>\n",
+              "      <td>4</td>\n",
+              "      <td>4</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>Datsun 710</td>\n",
+              "      <td>22.8</td>\n",
+              "      <td>4</td>\n",
+              "      <td>108.0</td>\n",
+              "      <td>93</td>\n",
+              "      <td>3.85</td>\n",
+              "      <td>2.320</td>\n",
+              "      <td>18.61</td>\n",
+              "      <td>1</td>\n",
+              "      <td>1</td>\n",
+              "      <td>4</td>\n",
+              "      <td>1</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>Hornet 4 Drive</td>\n",
+              "      <td>21.4</td>\n",
+              "      <td>6</td>\n",
+              "      <td>258.0</td>\n",
+              "      <td>110</td>\n",
+              "      <td>3.08</td>\n",
+              "      <td>3.215</td>\n",
+              "      <td>19.44</td>\n",
+              "      <td>1</td>\n",
+              "      <td>0</td>\n",
+              "      <td>3</td>\n",
+              "      <td>1</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>Hornet Sportabout</td>\n",
+              "      <td>18.7</td>\n",
+              "      <td>8</td>\n",
+              "      <td>360.0</td>\n",
+              "      <td>175</td>\n",
+              "      <td>3.15</td>\n",
+              "      <td>3.440</td>\n",
+              "      <td>17.02</td>\n",
+              "      <td>0</td>\n",
+              "      <td>0</td>\n",
+              "      <td>3</td>\n",
+              "      <td>2</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "      <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-2dc51fda-1e41-42db-a5c0-6076a85fa49a')\"\n",
+              "              title=\"Convert this dataframe to an interactive table.\"\n",
+              "              style=\"display:none;\">\n",
+              "        \n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\"viewBox=\"0 0 24 24\"\n",
+              "       width=\"24px\">\n",
+              "    <path d=\"M0 0h24v24H0V0z\" fill=\"none\"/>\n",
+              "    <path d=\"M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z\"/><path d=\"M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z\"/>\n",
+              "  </svg>\n",
+              "      </button>\n",
+              "      \n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      flex-wrap:wrap;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "      <script>\n",
+              "        const buttonEl =\n",
+              "          document.querySelector('#df-2dc51fda-1e41-42db-a5c0-6076a85fa49a button.colab-df-convert');\n",
+              "        buttonEl.style.display =\n",
+              "          google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "        async function convertToInteractive(key) {\n",
+              "          const element = document.querySelector('#df-2dc51fda-1e41-42db-a5c0-6076a85fa49a');\n",
+              "          const dataTable =\n",
+              "            await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                     [key], {});\n",
+              "          if (!dataTable) return;\n",
+              "\n",
+              "          const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "            '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "            + ' to learn more about interactive tables.';\n",
+              "          element.innerHTML = '';\n",
+              "          dataTable['output_type'] = 'display_data';\n",
+              "          await google.colab.output.renderOutput(dataTable, element);\n",
+              "          const docLink = document.createElement('div');\n",
+              "          docLink.innerHTML = docLinkHtml;\n",
+              "          element.appendChild(docLink);\n",
+              "        }\n",
+              "      </script>\n",
+              "    </div>\n",
+              "  </div>\n",
+              "  "
+            ]
+          },
+          "metadata": {},
+          "execution_count": 34
+        }
+      ],
+      "source": [
+        "# Lectura de un archivo csv\n",
+        "df = pd.read_csv('mtcars.csv')\n",
+        "df.head()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "4JoGt04EE_vr"
+      },
+      "outputs": [],
+      "source": [
+        "# Escribir un csv\n",
+        "# index = False - no escribe los valores de indice, el valor predeterminado es True\n",
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Crear un DataFrame de ejemplo\n",
+        "data = {\n",
+        "    'Name': ['John', 'Emma', 'Peter'],\n",
+        "    'Age': [25, 30, 35],\n",
+        "    'City': ['New York', 'London', 'Paris']\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Escribir el DataFrame en un archivo CSV\n",
+        "df.to_csv('output.csv', index=False)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "YoHlMIShFRCt"
+      },
+      "outputs": [],
+      "source": [
+        "# Leyendo desde un archivo .txt\n",
+        "# df=pd.read_csv('Data/mtcars.txt', sep='\\t')\n",
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a sample DataFrame\n",
+        "data = {\n",
+        "    'Name': ['John', 'Emma', 'Peter'],\n",
+        "    'Age': [25, 30, 35],\n",
+        "    'City': ['New York', 'London', 'Paris']\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Write the DataFrame to a CSV file\n",
+        "df.to_csv('output.csv', index=False)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "e3Msn077GtuI"
+      },
+      "outputs": [],
+      "source": [
+        "# Leyendo un archivo Excel\n",
+        "#df=pd.read_excel('Data/mtcars.xlsx','Sheet2')\n",
+        "# Completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Reading an Excel file\n",
+        "df = pd.read_excel('mtcars.xlsx', sheet_name='Sheet2')\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "xWCcg3JGI0NR"
+      },
+      "source": [
+        "### Resumen de estadísticas básicas\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "54NqMh47HBCZ"
+      },
+      "outputs": [],
+      "source": [
+        "#df = pd.read_csv('Data/iris.csv')\n",
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Reading a CSV file\n",
+        "df = pd.read_csv('iris.csv')\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "wkI0064bJHE0"
+      },
+      "source": [
+        "#### Covarianza\n",
+        ""
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "GlwA10C4JAyU",
+        "outputId": "7828ab1e-c324-4970-9a9a-2cdcc491b861"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "     A    B     C\n",
+            "A  2.5 -2.5   5.0\n",
+            "B -2.5  2.5  -5.0\n",
+            "C  5.0 -5.0  10.0\n"
+          ]
+        }
+      ],
+      "source": [
+        "# covarianza: devuelve la covarianza entre columnas adecuadas\n",
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a sample DataFrame\n",
+        "data = {\n",
+        "    'A': [1, 2, 3, 4, 5],\n",
+        "    'B': [5, 4, 3, 2, 1],\n",
+        "    'C': [1, 3, 5, 7, 9]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Calculate the covariance\n",
+        "cov_matrix = df.cov()\n",
+        "\n",
+        "print(cov_matrix)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "6Rj-HfKeKkUY"
+      },
+      "source": [
+        "#### Correlación\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "H_TLYjm5KbkP",
+        "outputId": "d517c33f-35cc-4c22-fd93-c2d1a1175e12"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "     A    B    C\n",
+            "A  1.0 -1.0  1.0\n",
+            "B -1.0  1.0 -1.0\n",
+            "C  1.0 -1.0  1.0\n"
+          ]
+        }
+      ],
+      "source": [
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a sample DataFrame\n",
+        "data = {\n",
+        "    'A': [1, 2, 3, 4, 5],\n",
+        "    'B': [5, 4, 3, 2, 1],\n",
+        "    'C': [1, 3, 5, 7, 9]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Calculate the correlation\n",
+        "corr_matrix = df.corr()\n",
+        "\n",
+        "print(corr_matrix)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "J64xxx5-Lk5t"
+      },
+      "source": [
+        "### Visualización de datos\n",
+        "Pandas DataFrame viene con funciones integradas para ver los datos contenidos:\n",
+        "\n",
+        "* Mirando los `n` primeros registros, el valor predeterminado de `n` es 5 si no se especifica:  `df.head(n=2)`.\n",
+        "\n",
+        "* Mirando los `n` registros inferiores: `df.tail()`\n",
+        "\n",
+        "* Obtener los nombres de las columnas: `df.columns`\n",
+        "\n",
+        "* Obtener los tipos de datos de las columnas: `df.types`\n",
+        "\n",
+        "* Obtener el índice del dataframe: `df.index`\n",
+        "\n",
+        "* Obtener valores únicos: `df[column_name].unique()`\n",
+        "\n",
+        "* Obtener valores: `df.values`\n",
+        "\n",
+        "* Ordenar el dataframe: `df.sort_values(by =['Column1', 'Column2'], ascending=[True,True'])`\n",
+        "\n",
+        "* Seleccionar/ver por el nombre de la columna: `df[column_name]`\n",
+        "\n",
+        "* Seleccionar/ver por número de fila `df[0:3]`\n",
+        "\n",
+        "* Selección por índice:\n",
+        "\n",
+        "- `df.loc[0:3] # índice de 0 a 3`\n",
+        "- `df.loc[0:3,[‘column1’, ‘column2’]] # índice de 0 a 3 para las columnas específicas`\n",
+        "\n",
+        "* Selección por posición\n",
+        "\n",
+        "- `df.iloc[0:2] # usando el rango, primeras 2 filas`\n",
+        "- `df.iloc[2,3,6] # posición específica`\n",
+        "-  `df.iloc[0:2,0:2] # primeras 2 filas y primeras 2 columnas`\n",
+        "\n",
+        "* Selección sin que esté en el índice\n",
+        "\n",
+        "- `print(df.ix[1,1]) # valor de la primera fila y la primera columna`\n",
+        "- `print(df.ix[:,2]) # todas las filas de la columna en la segunda posición`\n",
+        "\n",
+        "* Alternativa más rápida a `iloc` para obtener valores escalares: `print(df.iat[1,1])`\n",
+        "\n",
+        "* Transponer el dataframe: `df.T`\n",
+        "\n",
+        "* Filtrar DataFrame según la condición de valor para una columna: `df[df['column_name'] > 7.5]`\n",
+        "\n",
+        "* Filtrar DataFrame basado en una condición de valor en una columna: `df[df['column_name'].isin(['condition_value1', 'condition_value2'])]`\n",
+        "\n",
+        "* Filtro basado en múltiples condiciones en múltiples columnas usando el operador AND: `df[(df['column1']>7.5) & (df['column2']>3)]`\n",
+        "\n",
+        "* Filtro basado en múltiples condiciones en múltiples columnas usando el operador OR: `df[(df[‘column1’]>7.5) | (df['column2']>3)]`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 29,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "3CmE078qSKRN",
+        "outputId": "45a60078-8786-4c22-89e4-d56c62e3863f"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Nombres de las columnas: Index(['primer_nombre', 'ultimo_nombre', 'edad'], dtype='object')\n",
+            "Column names: Index(['primer_nombre', 'ultimo_nombre', 'edad'], dtype='object')\n"
+          ]
+        }
+      ],
+      "source": [
+        "print (\"Nombres de las columnas:\" , df.columns)\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Assuming df is the DataFrame variable\n",
+        "print(\"Column names:\", df.columns)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 30,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "b5jc_HiMTKJe",
+        "outputId": "28ee04e0-dbaa-48e6-b166-995aa3121a8c"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Indice del DataFrame :  RangeIndex(start=0, stop=6, step=1)\n",
+            "DataFrame index: RangeIndex(start=0, stop=6, step=1)\n"
+          ]
+        }
+      ],
+      "source": [
+        "print (\"Indice del DataFrame : \", df.index)\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Assuming df is the DataFrame variable\n",
+        "print(\"DataFrame index:\", df.index)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 31,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "8otEGZaxUBcN",
+        "outputId": "9874bad6-6cbc-4283-ac26-c977bf21f521"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[['Amy' 'Jackson' 42]\n",
+            " ['Amy' 'J' 42]\n",
+            " ['Jason' 'Miller' 36]\n",
+            " ['Nick' 'Milner' 24]\n",
+            " ['Stephen' 'L' 24]\n",
+            " ['Amy' 'J' 42]]\n",
+            "[['Amy' 'Jackson' 42]\n",
+            " ['Amy' 'J' 42]\n",
+            " ['Jason' 'Miller' 36]\n",
+            " ['Nick' 'Milner' 24]\n",
+            " ['Stephen' 'L' 24]\n",
+            " ['Amy' 'J' 42]]\n"
+          ]
+        }
+      ],
+      "source": [
+        "print(df.values)\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Assuming df is the DataFrame variable\n",
+        "print(df.values)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 32,
+      "metadata": {
+        "id": "0skr4dyrTfPs",
+        "outputId": "993b38dd-b766-47d5-dd61-8da7ce872645",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "0    25\n",
+            "1    30\n",
+            "2    22\n",
+            "3    27\n",
+            "4    35\n",
+            "Name: Age, dtype: int64\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Valores para una especifica columna\n",
+        "# Completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame\n",
+        "data = {\n",
+        "    'Name': ['John', 'Alice', 'Bob', 'Jane', 'Michael'],\n",
+        "    'Age': [25, 30, 22, 27, 35],\n",
+        "    'Salary': [50000, 60000, 45000, 55000, 70000]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Retrieve the values for the 'Age' column\n",
+        "age_values = df['Age']\n",
+        "\n",
+        "# Display the values\n",
+        "print(age_values)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 34,
+      "metadata": {
+        "id": "drI7C2qEUJTc"
+      },
+      "outputs": [],
+      "source": [
+        "#df['Species'].unique()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 35,
+      "metadata": {
+        "id": "otBu5HVWUamB"
+      },
+      "outputs": [],
+      "source": [
+        "# df['Sepal.Length'].unique()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Yx8vBzDOUdym"
+      },
+      "outputs": [],
+      "source": [
+        "# df.sort_values(by = ['Species', 'Sepal.Length'], ascending=[True, True])"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "tcHUx3W8U7PT"
+      },
+      "outputs": [],
+      "source": [
+        "#df['Species']"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 36,
+      "metadata": {
+        "id": "o5lOhc1sVNhu",
+        "outputId": "f067a95b-8abc-420b-ef2a-ccdccec6e6f7",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Valores únicos de la columna 'Especie':\n",
+            "['setosa' 'versicolor' 'virginica']\n",
+            "Valores únicos de la columna 'Longitud.Sepal':\n",
+            "[5.1 5.7 6.3 4.9 5.8]\n",
+            "DataFrame ordenado por 'Especie' y 'Longitud.Sepal':\n",
+            "      Especie  Longitud.Sepal  Ancho.Sepal\n",
+            "3      setosa             4.9          3.0\n",
+            "0      setosa             5.1          3.5\n",
+            "1  versicolor             5.7          2.8\n",
+            "4  versicolor             5.8          2.9\n",
+            "2   virginica             6.3          3.3\n",
+            "Columna 'Especie':\n",
+            "0        setosa\n",
+            "1    versicolor\n",
+            "2     virginica\n",
+            "3        setosa\n",
+            "4    versicolor\n",
+            "Name: Especie, dtype: object\n"
+          ]
+        }
+      ],
+      "source": [
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Crear un DataFrame de ejemplo\n",
+        "data = {\n",
+        "    'Especie': ['setosa', 'versicolor', 'virginica', 'setosa', 'versicolor'],\n",
+        "    'Longitud.Sepal': [5.1, 5.7, 6.3, 4.9, 5.8],\n",
+        "    'Ancho.Sepal': [3.5, 2.8, 3.3, 3.0, 2.9]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Obtener valores únicos de la columna 'Especie'\n",
+        "especie_unique = df['Especie'].unique()\n",
+        "print(\"Valores únicos de la columna 'Especie':\")\n",
+        "print(especie_unique)\n",
+        "\n",
+        "# Obtener valores únicos de la columna 'Longitud.Sepal'\n",
+        "longitud_sepal_unique = df['Longitud.Sepal'].unique()\n",
+        "print(\"Valores únicos de la columna 'Longitud.Sepal':\")\n",
+        "print(longitud_sepal_unique)\n",
+        "\n",
+        "# Ordenar el DataFrame por las columnas 'Especie' y 'Longitud.Sepal' en orden ascendente\n",
+        "df_sorted = df.sort_values(by=['Especie', 'Longitud.Sepal'], ascending=[True, True])\n",
+        "print(\"DataFrame ordenado por 'Especie' y 'Longitud.Sepal':\")\n",
+        "print(df_sorted)\n",
+        "\n",
+        "# Acceder a la columna 'Especie'\n",
+        "especie_column = df['Especie']\n",
+        "print(\"Columna 'Especie':\")\n",
+        "print(especie_column)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "2mf3Je9gYpeV"
+      },
+      "source": [
+        "Selección diferente por opciones de etiqueta\n",
+        "\n",
+        "- `loc:` solo funciona en el índice\n",
+        "- `iloc:` trabaja en posición\n",
+        "- `iat:` Obtener valores escalares. es un `iloc` muy rapido."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 37,
+      "metadata": {
+        "id": "JwEqIFd4VbD1",
+        "outputId": "9095ba74-baf2-495f-deb5-b9bc1175f57b",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Selection by index using loc:\n",
+            "Name        Bob\n",
+            "Age          22\n",
+            "Salary    45000\n",
+            "Name: 2, dtype: object\n",
+            "Selection by index using iloc:\n",
+            "Name        Bob\n",
+            "Age          22\n",
+            "Salary    45000\n",
+            "Name: 2, dtype: object\n",
+            "Selection of scalar value using iat:\n",
+            "22\n"
+          ]
+        }
+      ],
+      "source": [
+        "# selección por indice\n",
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame\n",
+        "data = {\n",
+        "    'Name': ['John', 'Alice', 'Bob', 'Jane', 'Michael'],\n",
+        "    'Age': [25, 30, 22, 27, 35],\n",
+        "    'Salary': [50000, 60000, 45000, 55000, 70000]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Selection by index using loc\n",
+        "loc_result = df.loc[2]  # Selects the row with index label 2\n",
+        "print(\"Selection by index using loc:\")\n",
+        "print(loc_result)\n",
+        "\n",
+        "# Selection by index using iloc\n",
+        "iloc_result = df.iloc[2]  # Selects the row at position 2 (zero-based indexing)\n",
+        "print(\"Selection by index using iloc:\")\n",
+        "print(iloc_result)\n",
+        "\n",
+        "# Selection of scalar value using iat\n",
+        "iat_result = df.iat[2, 1]  # Selects the value at position (2, 1)\n",
+        "print(\"Selection of scalar value using iat:\")\n",
+        "print(iat_result)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 39,
+      "metadata": {
+        "id": "TeK51S8mZC8_",
+        "outputId": "8b05a4c1-552e-443e-b187-d0a3d6271e19",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Selection by index of specific label names using loc:\n",
+            "    Name  Age  Salary\n",
+            "B  Alice   30   60000\n",
+            "D   Jane   27   55000\n"
+          ]
+        }
+      ],
+      "source": [
+        "# selección por indice de nombres de etiquetas específicas\n",
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame\n",
+        "data = {\n",
+        "    'Name': ['John', 'Alice', 'Bob', 'Jane', 'Michael'],\n",
+        "    'Age': [25, 30, 22, 27, 35],\n",
+        "    'Salary': [50000, 60000, 45000, 55000, 70000]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data, index=['A', 'B', 'C', 'D', 'E'])\n",
+        "\n",
+        "# Selection by index of specific label names using loc\n",
+        "specific_rows = df.loc[['B', 'D']]  # Selects rows with index labels 'B' and 'D'\n",
+        "print(\"Selection by index of specific label names using loc:\")\n",
+        "print(specific_rows)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 41,
+      "metadata": {
+        "id": "p0mFC9yxZxLg",
+        "outputId": "40d1f5b7-1a1c-4aad-85a4-9ad5cdc5faf4",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Selection of the first row:\n",
+            "Name       John\n",
+            "Age          25\n",
+            "Salary    50000\n",
+            "Name: 0, dtype: object\n",
+            "Selection of rows within a specific range:\n",
+            "    Name  Age  Salary\n",
+            "1  Alice   30   60000\n",
+            "2    Bob   22   45000\n",
+            "Selection of a specific row:\n",
+            "Name        Bob\n",
+            "Age          22\n",
+            "Salary    45000\n",
+            "Name: 2, dtype: object\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Selección por posición\n",
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame\n",
+        "data = {\n",
+        "    'Name': ['John', 'Alice', 'Bob', 'Jane', 'Michael'],\n",
+        "    'Age': [25, 30, 22, 27, 35],\n",
+        "    'Salary': [50000, 60000, 45000, 55000, 70000]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Selection by position using iloc\n",
+        "# Select the first row\n",
+        "first_row = df.iloc[0]\n",
+        "print(\"Selection of the first row:\")\n",
+        "print(first_row)\n",
+        "\n",
+        "# Select rows within a specific range\n",
+        "range_of_rows = df.iloc[1:3]  # Selects rows at positions 1 and 2\n",
+        "print(\"Selection of rows within a specific range:\")\n",
+        "print(range_of_rows)\n",
+        "\n",
+        "# Select a specific row by position\n",
+        "specific_row = df.iloc[2]\n",
+        "print(\"Selection of a specific row:\")\n",
+        "print(specific_row)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 42,
+      "metadata": {
+        "id": "MT1DK0AcaAbH",
+        "outputId": "f6b7f989-6256-4b70-88cb-62e596ad8fc7",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Selection by position between rows given as a range:\n",
+            "    Name  Age  Salary\n",
+            "1  Alice   30   60000\n",
+            "2    Bob   22   45000\n",
+            "3   Jane   27   55000\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Seleccion por posicion entre filas dadas como rango\n",
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame\n",
+        "data = {\n",
+        "    'Name': ['John', 'Alice', 'Bob', 'Jane', 'Michael'],\n",
+        "    'Age': [25, 30, 22, 27, 35],\n",
+        "    'Salary': [50000, 60000, 45000, 55000, 70000]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Selection by position between rows given as a range using iloc\n",
+        "selected_rows = df.iloc[1:4]  # Selects rows from position 1 to 3 (exclusive of end position)\n",
+        "print(\"Selection by position between rows given as a range:\")\n",
+        "print(selected_rows)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "kaCwcf4SaTIL",
+        "outputId": "1fb3ac6e-eacc-4773-c397-dbab246e9bd9"
+      },
+      "source": [
+        "**Ejercicio**\n",
+        "\n",
+        "¿Qué produce `df.iloc[0:3, 0:3]` ?"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## Tu respuesta\n",
+        "El código `df.iloc[0:3, 0:3]` produce un sub-marco de datos que incluye las filas y columnas especificadas por el rango del índice posicional.\n",
+        "\n",
+        "Desglosemos el código:\n",
+        "\n",
+        "- `0:3` para las filas: Selecciona las filas desde la posición 0 del índice hasta la posición 3, pero sin incluirla. Esto significa que selecciona las filas en las posiciones 0, 1 y 2 (un total de 3 filas).\n",
+        "\n",
+        "- `0:3` para las columnas: Selecciona las columnas desde la posición de índice 0 hasta la posición de índice 3, pero sin incluirla. Esto significa que selecciona las columnas en las posiciones 0, 1 y 2 (un total de 3 columnas).\n",
+        "\n",
+        "Por lo tanto, `df.iloc[0:3, 0:3]` produce un submarco de datos que incluye las 3 primeras filas y las 3 primeras columnas del marco de datos original `df`. El submarco de datos resultante tendrá dimensiones 3x3.\n",
+        "\n",
+        "Tenga en cuenta que las posiciones de los índices están basadas en cero, por lo que la primera fila/columna está en la posición 0.\n",
+        "\n",
+        "Si imprimes el resultado de `df.iloc[0:3, 0:3]`, verás el sub-marco de datos seleccionado conteniendo las filas y columnas especificadas.\n",
+        "\n",
+        "Si necesitas alguna aclaración más, dímelo."
+      ],
+      "metadata": {
+        "id": "Xh3PTuC1pIum"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 43,
+      "metadata": {
+        "id": "jZPYlJ2CaZgL",
+        "outputId": "334bb6b6-ff9a-4978-8e30-416a4e6212c8",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Selection by position among specific row numbers:\n",
+            "      Name  Age  Salary\n",
+            "1    Alice   30   60000\n",
+            "3     Jane   27   55000\n",
+            "4  Michael   35   70000\n"
+          ]
+        }
+      ],
+      "source": [
+        "# seleccion por posicion entre numeros de fila especificos dados\n",
+        "# Completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame\n",
+        "data = {\n",
+        "    'Name': ['John', 'Alice', 'Bob', 'Jane', 'Michael'],\n",
+        "    'Age': [25, 30, 22, 27, 35],\n",
+        "    'Salary': [50000, 60000, 45000, 55000, 70000]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Selection by position among specific row numbers using iloc\n",
+        "row_numbers = [1, 3, 4]  # Specific row numbers to select\n",
+        "selected_rows = df.iloc[row_numbers]  # Selects rows at the specified row numbers\n",
+        "print(\"Selection by position among specific row numbers:\")\n",
+        "print(selected_rows)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "_orxFJhhbMj9"
+      },
+      "source": [
+        "Selección por índice de fila y columna (el índice comienza con 0).\n",
+        "\n",
+        "El siguiente caso obtendrá el valor `[índice de la primera fila, índice de la primera columna]`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 44,
+      "metadata": {
+        "id": "BT4I0aspbA3y",
+        "outputId": "a6254aad-8f31-431d-eb0d-4f7e855a6c00",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "30\n"
+          ]
+        }
+      ],
+      "source": [
+        "# obtener valores escalares. es un iloc muy rapido\n",
+        "print(df.iat[1,1])"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 45,
+      "metadata": {
+        "id": "dA-ID00IbrvM",
+        "outputId": "a6df8baa-55db-48ca-a1af-3931729db2d1",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "30\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Obtencion de datos sin que este en el indice\n",
+        "print(df.iloc[1,1])"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 47,
+      "metadata": {
+        "id": "xCBzTNf7cGQ8",
+        "outputId": "c709dc88-7aba-4976-c065-ff599f52b8df",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "0    50000\n",
+            "1    60000\n",
+            "2    45000\n",
+            "3    55000\n",
+            "4    70000\n",
+            "Name: Salary, dtype: int64\n"
+          ]
+        }
+      ],
+      "source": [
+        "# selecciona columnas por posicion\n",
+        "print(df.iloc[:, 2])"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 49,
+      "metadata": {
+        "id": "D3D7ufT-cO9h",
+        "outputId": "15d61f79-afcf-4c7f-ba59-aadb85651842",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 143
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "            0      1      2      3        4\n",
+              "Name     John  Alice    Bob   Jane  Michael\n",
+              "Age        25     30     22     27       35\n",
+              "Salary  50000  60000  45000  55000    70000"
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-8623b31c-d059-4d86-a4d0-54f50a390a46\">\n",
+              "    <div class=\"colab-df-container\">\n",
+              "      <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>0</th>\n",
+              "      <th>1</th>\n",
+              "      <th>2</th>\n",
+              "      <th>3</th>\n",
+              "      <th>4</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>Name</th>\n",
+              "      <td>John</td>\n",
+              "      <td>Alice</td>\n",
+              "      <td>Bob</td>\n",
+              "      <td>Jane</td>\n",
+              "      <td>Michael</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>Age</th>\n",
+              "      <td>25</td>\n",
+              "      <td>30</td>\n",
+              "      <td>22</td>\n",
+              "      <td>27</td>\n",
+              "      <td>35</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>Salary</th>\n",
+              "      <td>50000</td>\n",
+              "      <td>60000</td>\n",
+              "      <td>45000</td>\n",
+              "      <td>55000</td>\n",
+              "      <td>70000</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "      <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-8623b31c-d059-4d86-a4d0-54f50a390a46')\"\n",
+              "              title=\"Convert this dataframe to an interactive table.\"\n",
+              "              style=\"display:none;\">\n",
+              "        \n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\"viewBox=\"0 0 24 24\"\n",
+              "       width=\"24px\">\n",
+              "    <path d=\"M0 0h24v24H0V0z\" fill=\"none\"/>\n",
+              "    <path d=\"M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z\"/><path d=\"M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z\"/>\n",
+              "  </svg>\n",
+              "      </button>\n",
+              "      \n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      flex-wrap:wrap;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "      <script>\n",
+              "        const buttonEl =\n",
+              "          document.querySelector('#df-8623b31c-d059-4d86-a4d0-54f50a390a46 button.colab-df-convert');\n",
+              "        buttonEl.style.display =\n",
+              "          google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "        async function convertToInteractive(key) {\n",
+              "          const element = document.querySelector('#df-8623b31c-d059-4d86-a4d0-54f50a390a46');\n",
+              "          const dataTable =\n",
+              "            await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                     [key], {});\n",
+              "          if (!dataTable) return;\n",
+              "\n",
+              "          const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "            '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "            + ' to learn more about interactive tables.';\n",
+              "          element.innerHTML = '';\n",
+              "          dataTable['output_type'] = 'display_data';\n",
+              "          await google.colab.output.renderOutput(dataTable, element);\n",
+              "          const docLink = document.createElement('div');\n",
+              "          docLink.innerHTML = docLinkHtml;\n",
+              "          element.appendChild(docLink);\n",
+              "        }\n",
+              "      </script>\n",
+              "    </div>\n",
+              "  </div>\n",
+              "  "
+            ]
+          },
+          "metadata": {},
+          "execution_count": 49
+        }
+      ],
+      "source": [
+        "df.T"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "0gQUrpJYccGh"
+      },
+      "source": [
+        "#### Indexado Booleano"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 50,
+      "metadata": {
+        "id": "Fu-djdEic9et",
+        "outputId": "061d4b31-33b9-4f3e-d443-5791fe6d9af3",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "metadata": {
+            "tags": null
+          },
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Selected rows based on condition:\n",
+            "      Name  Age  Salary\n",
+            "1    Alice   30   60000\n",
+            "3     Jane   27   55000\n",
+            "4  Michael   35   70000\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame\n",
+        "data = {\n",
+        "    'Name': ['John', 'Alice', 'Bob', 'Jane', 'Michael'],\n",
+        "    'Age': [25, 30, 22, 27, 35],\n",
+        "    'Salary': [50000, 60000, 45000, 55000, 70000]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Boolean indexing\n",
+        "# Select rows where Age is greater than 25\n",
+        "condition = df['Age'] > 25\n",
+        "selected_rows = df[condition]\n",
+        "print(\"Selected rows based on condition:\")\n",
+        "print(selected_rows)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "tAu0CN5geolP"
+      },
+      "source": [
+        "### Operaciones básicas con Pandas\n",
+        "\n",
+        "* Convertir cadenas a series de fechas: `pd.to_datetime(pd.Series(['2017-04-01','2017-04-02','2017-04-03']))`.\n",
+        "\n",
+        "* Cambiar el nombre de una columna específica: `df.rename(columns={‘old_columnname’:‘new_columnname'}, inplace=True)`\n",
+        "\n",
+        "* Cambiar el nombre de todas las columnas del DataFrame: `df.columns = ['col1_new_name','col2_new_name'...]`\n",
+        "\n",
+        "* Marcar duplicados: `df.duplicated()`\n",
+        "\n",
+        "* Quitar duplicados:`df = df.drop_duplicates()`\n",
+        "\n",
+        "* Quitar duplicados en una columna específica: `df.drop_duplicates(['column_name'])`\n",
+        "\n",
+        "* Quitar los duplicados en una columna específica, pero se conserva la primera o la última observación en el conjunto de duplicados: `df.drop_duplicates(['column_name'], keep = 'first') # cambiar al ultimo para conservar la ultima observación del duplicado`.\n",
+        "\n",
+        "* Crear una nueva columna a partir de una columna existente: `df['new_column_name'] = df['new_column_name'] + 5`\n",
+        "\n",
+        "* Crear una nueva columna a partir de los elementos de dos columnas: `df['new_column_name'] = df['existing_column1'] + '_' + df['existing_column2']`\n",
+        "\n",
+        "* Agregar una lista o una nueva columna a DataFrame: `df['new_column_name'] = pd.Series(mylist)`\n",
+        "\n",
+        "* Descartar las filas y columnas faltantes que tienen valores faltantes: `df.dropna()`\n",
+        "\n",
+        "* Reemplaza todos los valores faltantes con 0 (o puede usar cualquier int o str): `df.fillna(value=0)`\n",
+        "\n",
+        "* Reemplaza los valores faltantes con la última observación válida (útil en datos de series de tiempo). Por ejemplo, la temperatura no cambia drásticamente en comparación con una observación anterior. Una forma es llenar de NA forward-backward más alla de la media.\n",
+        "\n",
+        "    1) 'pad' / 'ffill' - forward fill\n",
+        "\n",
+        "    2) 'bfill'/'backfill' - backward fill\n",
+        "\n",
+        "    Límite: si se especifica el método, este es el número máximo de valores de NaN consecutivos para completar forward/backward fill: `df.fillna (method = 'ffill', inplace= True, limit = 1)`\n",
+        "\n",
+        "* Verifica la condición del valor faltante y devuelva el valor Booleano de `True` o `False` para cada celda: `pd.isnull(df)`\n",
+        "\n",
+        "* Reemplaza todos los valores faltantes para una columna dada con la media: `mean=df['column_name].mean(); df['column_name'].fillna(mean)`\n",
+        "\n",
+        "* Devuelve la media para cada columna: `df.mean()`\n",
+        "\n",
+        "* Retorna el máximo para cada columna: `df.max()`\n",
+        "\n",
+        "* Retorno el mínimo para cada columna: `df.min()`\n",
+        "\n",
+        "* Devuelve la suma para cada columna: `df.sum()`\n",
+        "\n",
+        "* Conteo para cada columna: `df.count()`\n",
+        "\n",
+        "* Devuelve la suma acumulada para cada columna: `df.cumsum()`\n",
+        "\n",
+        "* Aplica una función a lo largo de cualquier eje del DataFrame: `df.apply(np.cumsum)`\n",
+        "\n",
+        "* Itera sobre cada elemento de una serie y realizar la acción deseada: `df['column_name'].map(lambda x: 1+x) # esto itera sobre la columna y agrega el valor 1 a cada elemento`\n",
+        "\n",
+        "* Aplica una función a cada elemento del dataframe:`func = lambda x: x + 1 # función para agregar una constante 1 a cada elemento del dataframe df.applymap(func)`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "LT8uTUz6dmIb"
+      },
+      "outputs": [],
+      "source": [
+        "cadena_fechas = ('2017-04-01','2017-04-02','2017-04-03','2017-04-04')\n",
+        "pd.to_datetime(pd.Series(cadena_fechas))"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "A6Gm80pLpQCe"
+      },
+      "outputs": [],
+      "source": [
+        "df.rename(columns = {'Sepal.Length': 'Sepal_Length'}, inplace=True)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "2LJNuhlYpoWJ"
+      },
+      "outputs": [],
+      "source": [
+        "df.columns = ['Sepal_Length', 'Sepal_Width', 'Petal_Length', 'Petal_Width', 'Species']\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "82eOr0OmqCvT"
+      },
+      "outputs": [],
+      "source": [
+        "# Removemos los duplicados\n",
+        "\n",
+        "data_1 = {'primer_nombre': ['Amy', 'Amy', 'Jason', 'Nick', 'Stephen','Amy'],\n",
+        "        'ultimo_nombre': ['Jackson', 'J', 'Miller', 'Milner', 'L','J'],\n",
+        "        'edad': [42, 42, 36, 24, 24, 42]}\n",
+        "df = pd.DataFrame(data_1, columns = ['primer_nombre', 'ultimo_nombre', 'edad'])\n",
+        "print(df)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 22,
+      "metadata": {
+        "id": "41fI6CqsqeGT",
+        "outputId": "a6e8dd06-4a66-4014-ee5e-cd43d25d68d9",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "0    False\n",
+            "1    False\n",
+            "2    False\n",
+            "3    False\n",
+            "4    False\n",
+            "5     True\n",
+            "dtype: bool\n"
+          ]
+        }
+      ],
+      "source": [
+        "print(df.duplicated())"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 23,
+      "metadata": {
+        "id": "AeQFP7fYrjc4",
+        "outputId": "335711e5-ac05-429e-aa0b-43b0ea08ba58",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  primer_nombre ultimo_nombre  edad\n",
+            "0           Amy       Jackson    42\n",
+            "1           Amy             J    42\n",
+            "2         Jason        Miller    36\n",
+            "3          Nick        Milner    24\n",
+            "4       Stephen             L    24\n"
+          ]
+        }
+      ],
+      "source": [
+        "print(df.drop_duplicates())"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 24,
+      "metadata": {
+        "id": "sPee656ar2sr",
+        "outputId": "e5d89e8e-4f6d-4419-ed2f-8e8cdccfbf9a",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 175
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "  primer_nombre ultimo_nombre  edad\n",
+              "0           Amy       Jackson    42\n",
+              "2         Jason        Miller    36\n",
+              "3          Nick        Milner    24\n",
+              "4       Stephen             L    24"
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-d99d5337-b2ab-4e37-82d5-24d1d7da48c1\">\n",
+              "    <div class=\"colab-df-container\">\n",
+              "      <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>primer_nombre</th>\n",
+              "      <th>ultimo_nombre</th>\n",
+              "      <th>edad</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>Amy</td>\n",
+              "      <td>Jackson</td>\n",
+              "      <td>42</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>Jason</td>\n",
+              "      <td>Miller</td>\n",
+              "      <td>36</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>Nick</td>\n",
+              "      <td>Milner</td>\n",
+              "      <td>24</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>Stephen</td>\n",
+              "      <td>L</td>\n",
+              "      <td>24</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "      <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-d99d5337-b2ab-4e37-82d5-24d1d7da48c1')\"\n",
+              "              title=\"Convert this dataframe to an interactive table.\"\n",
+              "              style=\"display:none;\">\n",
+              "        \n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\"viewBox=\"0 0 24 24\"\n",
+              "       width=\"24px\">\n",
+              "    <path d=\"M0 0h24v24H0V0z\" fill=\"none\"/>\n",
+              "    <path d=\"M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z\"/><path d=\"M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z\"/>\n",
+              "  </svg>\n",
+              "      </button>\n",
+              "      \n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      flex-wrap:wrap;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "      <script>\n",
+              "        const buttonEl =\n",
+              "          document.querySelector('#df-d99d5337-b2ab-4e37-82d5-24d1d7da48c1 button.colab-df-convert');\n",
+              "        buttonEl.style.display =\n",
+              "          google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "        async function convertToInteractive(key) {\n",
+              "          const element = document.querySelector('#df-d99d5337-b2ab-4e37-82d5-24d1d7da48c1');\n",
+              "          const dataTable =\n",
+              "            await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                     [key], {});\n",
+              "          if (!dataTable) return;\n",
+              "\n",
+              "          const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "            '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "            + ' to learn more about interactive tables.';\n",
+              "          element.innerHTML = '';\n",
+              "          dataTable['output_type'] = 'display_data';\n",
+              "          await google.colab.output.renderOutput(dataTable, element);\n",
+              "          const docLink = document.createElement('div');\n",
+              "          docLink.innerHTML = docLinkHtml;\n",
+              "          element.appendChild(docLink);\n",
+              "        }\n",
+              "      </script>\n",
+              "    </div>\n",
+              "  </div>\n",
+              "  "
+            ]
+          },
+          "metadata": {},
+          "execution_count": 24
+        }
+      ],
+      "source": [
+        "df.drop_duplicates(['primer_nombre'], keep ='first')"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "lSc85cxxIG2W"
+      },
+      "source": [
+        "**Ejercicio**\n",
+        "\n",
+        "* Agrega las columnas siguientes: `edad_mas_5`, `nombre_completo` y `genero`\n",
+        " - `edad_mas_5`viene de sumar 5 a la etiqueta `edad`\n",
+        " - `nombre_completo` viene de sumar las etiquetas `primer_nombre`, `_` y `ultimo_nombre`\n",
+        " - `genero` es una serie de elementos `'F','F','M','M','M','F'.`"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Hju_v1OUs8XV"
+      },
+      "outputs": [],
+      "source": [
+        "# Tu respuesta\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame\n",
+        "data = {\n",
+        "    'first_name': ['John', 'Alice', 'Bob', 'Jane', 'Michael'],\n",
+        "    'last_name': ['Doe', 'Smith', 'Johnson', 'Doe', 'Williams'],\n",
+        "    'age': [25, 30, 22, 27, 35]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Add the 'age_mas_5' column\n",
+        "df['age_mas_5'] = df['age'] + 5\n",
+        "\n",
+        "# Add the 'full_name' column\n",
+        "df['full_name'] = df['first_name'] + '_' + df['last_name']\n",
+        "\n",
+        "# Add the 'gender' column\n",
+        "gender = ['F', 'F', 'M', 'M', 'M', 'F']\n",
+        "df['gender'] = pd.Series(gender)\n",
+        "\n",
+        "# Display the updated DataFrame\n",
+        "print(df)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "LV8Khzaqt5oY"
+      },
+      "source": [
+        "#### Datos perdidos\n",
+        "\n",
+        "pandas usa principalmente el valor `np.nan` para representar los datos que faltan. Por defecto no se incluye en los cálculos."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 25,
+      "metadata": {
+        "id": "yt3FCXUatdUc",
+        "outputId": "1bce42b2-0c42-49fd-e1ce-3bbe86467ca4",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  primer_nombre ultimo_nombre  edad\n",
+            "0           Amy       Jackson    42\n",
+            "1           Amy             J    42\n",
+            "2         Jason        Miller    36\n",
+            "3          Nick        Milner    24\n",
+            "4       Stephen             L    24\n",
+            "5           Amy             J    42\n"
+          ]
+        }
+      ],
+      "source": [
+        "#df.iloc[4,2] = np.nan\n",
+        "print(df)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 26,
+      "metadata": {
+        "id": "YtXj19W1uKMf",
+        "outputId": "83385203-1e42-48ac-d155-69eab44f6bb3",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  primer_nombre ultimo_nombre  edad\n",
+            "0           Amy       Jackson    42\n",
+            "1           Amy             J    42\n",
+            "2         Jason        Miller    36\n",
+            "3          Nick        Milner    24\n",
+            "4       Stephen             L    24\n",
+            "5           Amy             J    42\n"
+          ]
+        }
+      ],
+      "source": [
+        "print(df.dropna())"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 27,
+      "metadata": {
+        "id": "gGa-aAkAyNgf",
+        "outputId": "3c2a7bc7-4f61-443e-9363-ca4ce41584a2",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  primer_nombre ultimo_nombre  edad\n",
+            "0           Amy       Jackson    42\n",
+            "1           Amy             J    42\n",
+            "2         Jason        Miller    36\n",
+            "3          Nick        Milner    24\n",
+            "4       Stephen             L    24\n",
+            "5           Amy             J    42\n"
+          ]
+        }
+      ],
+      "source": [
+        "#df.iloc[4,2] = np.nan\n",
+        "print(df)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 28,
+      "metadata": {
+        "id": "JCU5_DJQyZQV",
+        "outputId": "2fa03a13-189c-4ae5-b32f-f5cd91be65f4",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 237
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "  primer_nombre ultimo_nombre  edad\n",
+              "0           Amy       Jackson    42\n",
+              "1           Amy             J    42\n",
+              "2         Jason        Miller    36\n",
+              "3          Nick        Milner    24\n",
+              "4       Stephen             L    24\n",
+              "5           Amy             J    42"
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-11379b4d-c672-46c6-ab5d-090c3d922ad8\">\n",
+              "    <div class=\"colab-df-container\">\n",
+              "      <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>primer_nombre</th>\n",
+              "      <th>ultimo_nombre</th>\n",
+              "      <th>edad</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>Amy</td>\n",
+              "      <td>Jackson</td>\n",
+              "      <td>42</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>Amy</td>\n",
+              "      <td>J</td>\n",
+              "      <td>42</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>Jason</td>\n",
+              "      <td>Miller</td>\n",
+              "      <td>36</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>Nick</td>\n",
+              "      <td>Milner</td>\n",
+              "      <td>24</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>Stephen</td>\n",
+              "      <td>L</td>\n",
+              "      <td>24</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>5</th>\n",
+              "      <td>Amy</td>\n",
+              "      <td>J</td>\n",
+              "      <td>42</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "      <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-11379b4d-c672-46c6-ab5d-090c3d922ad8')\"\n",
+              "              title=\"Convert this dataframe to an interactive table.\"\n",
+              "              style=\"display:none;\">\n",
+              "        \n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\"viewBox=\"0 0 24 24\"\n",
+              "       width=\"24px\">\n",
+              "    <path d=\"M0 0h24v24H0V0z\" fill=\"none\"/>\n",
+              "    <path d=\"M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z\"/><path d=\"M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z\"/>\n",
+              "  </svg>\n",
+              "      </button>\n",
+              "      \n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      flex-wrap:wrap;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "      <script>\n",
+              "        const buttonEl =\n",
+              "          document.querySelector('#df-11379b4d-c672-46c6-ab5d-090c3d922ad8 button.colab-df-convert');\n",
+              "        buttonEl.style.display =\n",
+              "          google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "        async function convertToInteractive(key) {\n",
+              "          const element = document.querySelector('#df-11379b4d-c672-46c6-ab5d-090c3d922ad8');\n",
+              "          const dataTable =\n",
+              "            await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                     [key], {});\n",
+              "          if (!dataTable) return;\n",
+              "\n",
+              "          const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "            '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "            + ' to learn more about interactive tables.';\n",
+              "          element.innerHTML = '';\n",
+              "          dataTable['output_type'] = 'display_data';\n",
+              "          await google.colab.output.renderOutput(dataTable, element);\n",
+              "          const docLink = document.createElement('div');\n",
+              "          docLink.innerHTML = docLinkHtml;\n",
+              "          element.appendChild(docLink);\n",
+              "        }\n",
+              "      </script>\n",
+              "    </div>\n",
+              "  </div>\n",
+              "  "
+            ]
+          },
+          "metadata": {},
+          "execution_count": 28
+        }
+      ],
+      "source": [
+        "df.fillna(value =0)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 53,
+      "metadata": {
+        "id": "zYtIIvVZyiMA",
+        "outputId": "446c518d-2b71-45e5-c647-4afd257215e4",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "      Name  Age  Salary\n",
+            "0     John   25   50000\n",
+            "1    Alice   30   60000\n",
+            "2      Bob   22   45000\n",
+            "3     Jane   27   55000\n",
+            "4  Michael   35   70000\n"
+          ]
+        }
+      ],
+      "source": [
+        "#df.iloc[4,2] = np.nan\n",
+        "print(df)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 54,
+      "metadata": {
+        "id": "APXmU7Gxyno_",
+        "outputId": "940c6d97-c275-4e7e-a8b4-01dd3af1a36e",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 206
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "    Name    Age  Salary\n",
+              "0  False  False   False\n",
+              "1  False  False   False\n",
+              "2  False  False   False\n",
+              "3  False  False   False\n",
+              "4  False  False   False"
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-d6612671-01b9-4ded-8f44-e60401fa7dc9\">\n",
+              "    <div class=\"colab-df-container\">\n",
+              "      <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Name</th>\n",
+              "      <th>Age</th>\n",
+              "      <th>Salary</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>False</td>\n",
+              "      <td>False</td>\n",
+              "      <td>False</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>False</td>\n",
+              "      <td>False</td>\n",
+              "      <td>False</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>False</td>\n",
+              "      <td>False</td>\n",
+              "      <td>False</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>False</td>\n",
+              "      <td>False</td>\n",
+              "      <td>False</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>False</td>\n",
+              "      <td>False</td>\n",
+              "      <td>False</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "      <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-d6612671-01b9-4ded-8f44-e60401fa7dc9')\"\n",
+              "              title=\"Convert this dataframe to an interactive table.\"\n",
+              "              style=\"display:none;\">\n",
+              "        \n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\"viewBox=\"0 0 24 24\"\n",
+              "       width=\"24px\">\n",
+              "    <path d=\"M0 0h24v24H0V0z\" fill=\"none\"/>\n",
+              "    <path d=\"M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z\"/><path d=\"M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z\"/>\n",
+              "  </svg>\n",
+              "      </button>\n",
+              "      \n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      flex-wrap:wrap;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "      <script>\n",
+              "        const buttonEl =\n",
+              "          document.querySelector('#df-d6612671-01b9-4ded-8f44-e60401fa7dc9 button.colab-df-convert');\n",
+              "        buttonEl.style.display =\n",
+              "          google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "        async function convertToInteractive(key) {\n",
+              "          const element = document.querySelector('#df-d6612671-01b9-4ded-8f44-e60401fa7dc9');\n",
+              "          const dataTable =\n",
+              "            await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                     [key], {});\n",
+              "          if (!dataTable) return;\n",
+              "\n",
+              "          const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "            '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "            + ' to learn more about interactive tables.';\n",
+              "          element.innerHTML = '';\n",
+              "          dataTable['output_type'] = 'display_data';\n",
+              "          await google.colab.output.renderOutput(dataTable, element);\n",
+              "          const docLink = document.createElement('div');\n",
+              "          docLink.innerHTML = docLinkHtml;\n",
+              "          element.appendChild(docLink);\n",
+              "        }\n",
+              "      </script>\n",
+              "    </div>\n",
+              "  </div>\n",
+              "  "
+            ]
+          },
+          "metadata": {},
+          "execution_count": 54
+        }
+      ],
+      "source": [
+        "pd.isnull(df)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "6GafVRa_IG2Y"
+      },
+      "source": [
+        "#### Operaciones"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 55,
+      "metadata": {
+        "id": "7qPO8OHUyv-x",
+        "outputId": "f7820c4e-fb5e-4c69-88bf-75a3c5fa399e",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "     age\n",
+            "0  25.00\n",
+            "1  30.00\n",
+            "2  29.25\n",
+            "3  27.00\n",
+            "4  35.00\n"
+          ]
+        }
+      ],
+      "source": [
+        "#media = df['edad'].mean()\n",
+        "#media\n",
+        "# usamos la media para reeemplazar el NaN\n",
+        "# completar\n",
+        "import pandas as pd\n",
+        "import numpy as np\n",
+        "\n",
+        "# Create a DataFrame\n",
+        "data = {\n",
+        "    'age': [25, 30, np.nan, 27, 35]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Calculate the mean of the 'age' column\n",
+        "mean = df['age'].mean()\n",
+        "\n",
+        "# Replace NaN values with the calculated mean\n",
+        "df['age'].fillna(mean, inplace=True)\n",
+        "\n",
+        "# Display the updated DataFrame\n",
+        "print(df)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "1MDuqS7UzGtZ"
+      },
+      "outputs": [],
+      "source": [
+        "# df.fillna(method='ffill', inplace=True, limit=1)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Hm-mCI_WztC0"
+      },
+      "outputs": [],
+      "source": [
+        "#import warnings\n",
+        "#warnings.filterwarnings('ignore')\n",
+        "#df.mean()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "JzIZIUh50FgX"
+      },
+      "outputs": [],
+      "source": [
+        "#df.min()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "C-msyIYt0bri"
+      },
+      "outputs": [],
+      "source": [
+        "#df.max()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "NS_ZaD6J0e9x"
+      },
+      "outputs": [],
+      "source": [
+        "#df.sum()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Jcn-IglW0hXK"
+      },
+      "outputs": [],
+      "source": [
+        "#df.count()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "TAq1dqYH0kFe"
+      },
+      "outputs": [],
+      "source": [
+        "#df.cumsum()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "7qJamnllXGKQ"
+      },
+      "source": [
+        "#### Aplicación de función a elemento, columna o dataframe\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 57,
+      "metadata": {
+        "id": "M_cB15f70m6-",
+        "outputId": "5632896a-ea46-44bb-9f75-1cb2fa6cc297",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "5\n"
+          ]
+        }
+      ],
+      "source": [
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame\n",
+        "data = {\n",
+        "    'A': [1, 2, 3],\n",
+        "    'B': [4, 5, 6],\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Apply a function to a single element\n",
+        "result = df['A'][0] + df['B'][0]\n",
+        "print(result)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 58,
+      "metadata": {
+        "id": "6t1wvCStXU1O",
+        "outputId": "204b2f52-7f68-4fbd-8b1f-00d5fd4cb189",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "   column1\n",
+            "0        2\n",
+            "1        3\n",
+            "2        4\n",
+            "3        5\n",
+            "4        6\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Map: itera sobre cada elemento de una serie\n",
+        "# Completar agrega una constante 1 a cada elemento de la column1\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame\n",
+        "data = {\n",
+        "    'column1': [1, 2, 3, 4, 5]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Map: iterate over each element of a series\n",
+        "df['column1'] = df['column1'].map(lambda x: x + 1)\n",
+        "\n",
+        "# Display the updated DataFrame\n",
+        "print(df)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 63,
+      "metadata": {
+        "id": "mYEdjDSUXmrb"
+      },
+      "outputs": [],
+      "source": [
+        "#func=lambda x: x+1\n",
+        "#df_filtrado = df.iloc[:, 2:4]\n",
+        "#print(df_filtrado)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 64,
+      "metadata": {
+        "id": "YBiAYP8jYnzO"
+      },
+      "outputs": [],
+      "source": [
+        "#print(df_filtrado.applymap(func))"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "DE60gl7kIG2b"
+      },
+      "source": [
+        "**Ejemplo**\n",
+        "\n",
+        "La parte del poder de pandas se da por los métodos integrados en los objetos Series y DataFrame."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "wLLxPklNIG2b"
+      },
+      "outputs": [],
+      "source": [
+        "from io import StringIO\n",
+        "data = StringIO('''UPC,Units,Sales,Date\n",
+        "1234,5,20.2,1-1-2014\n",
+        "1234,2,8.,1-2-2014\n",
+        "1234,3,13.,1-3-2014\n",
+        "789,1,2.,1-1-2014\n",
+        "789,2,3.8,1-2-2014\n",
+        "789,,,1-3-2014\n",
+        "789,1,1.8,1-5-2014''')"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Me8Xn0VnIG2b"
+      },
+      "outputs": [],
+      "source": [
+        "sales = pd.read_csv(data)\n",
+        "sales"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "ryHhsimTIG2b"
+      },
+      "outputs": [],
+      "source": [
+        "sales.shape"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Om2UglzbIG2b"
+      },
+      "outputs": [],
+      "source": [
+        "sales.info()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "X9VNEpa6IG2b"
+      },
+      "source": [
+        "A diferencia del objeto `Series` que prueba la pertenencia con el índice, el `DataFrame` prueba la pertenencia con las columnas. El comportamiento de iteración `(__iter__)` y el comportamiento de pertenencia `(__contains__)` es el mismo para el `DataFrame`."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Ft5Zs8CHIG2c"
+      },
+      "source": [
+        "#### Operaciones de índice\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "iS7zBHzEIG2c"
+      },
+      "outputs": [],
+      "source": [
+        "# sales.reindex([0, 4])"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "64i3A9KqIG2c"
+      },
+      "outputs": [],
+      "source": [
+        "#sales.reindex(columns=['Date', 'Sales'])"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "oiuHLAM9IG2c"
+      },
+      "source": [
+        "La selección de columnas e índices se puede combinar para refinar aún más la selección. Además, se pueden incluir nuevas entradas para valores de índices y nombres de columna. Por defecto, usarán el parámetro opcional `fill_value` (que es NaN a menos que se especifique):"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "-1gG5E3ZIG2c"
+      },
+      "outputs": [],
+      "source": [
+        "#sales.reindex(index=[2, 6, 8], columns=['Sales', 'MIT', 'missing'])"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "embsfsLIIG2c"
+      },
+      "outputs": [],
+      "source": [
+        "#by_date = sales.set_index('Date')\n",
+        "#by_date"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "bZ_aZuOkIG2d"
+      },
+      "source": [
+        "Para agregar un índice entero creciente a un data frame, usa `.reset_index`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "yCQxcgW4IG2d"
+      },
+      "outputs": [],
+      "source": [
+        "# by_date.reset_index()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "KFYqI5qgIG2d"
+      },
+      "source": [
+        "#### Obtener y establecer valores\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "gk_LFBhzIG2d"
+      },
+      "outputs": [],
+      "source": [
+        "#sales.iat[4, 2]"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "HklCcjg0IG2d"
+      },
+      "source": [
+        "\n",
+        "A continuación, insertamos una columna `Category` después de ` UPC`  (en la posición 1):"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "vN-C2LyNIG2d"
+      },
+      "outputs": [],
+      "source": [
+        "#sales.insert(1, 'Category', 'Food')\n",
+        "# sales"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "fDgfziDRIG2d"
+      },
+      "source": [
+        "El método `.replace` es una forma poderosa de actualizar muchos valores de un data frame en las columnas. Para reemplazar todos los 789 con 790, realiza lo siguiente:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "lP52l5ffIG2d"
+      },
+      "outputs": [],
+      "source": [
+        "# sales.replace(789, 790)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "YYXaZSjcIG2e"
+      },
+      "outputs": [],
+      "source": [
+        "#sales.replace({'UPC': {789:790},\n",
+        "#                'Sales': {789: 1.4}})"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "KBpgKZmnIG2e"
+      },
+      "source": [
+        "El método `replace` también acepta expresiones regulares (pueden ser incluidas en diccionarios anidados) si  el paramétro`regex` se coloca en `True`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "wahLLtBQIG2e"
+      },
+      "outputs": [],
+      "source": [
+        "#sales.replace('(F.*d)', r'\\1_stuff', regex=True)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "FHL56Cm7IG2e"
+      },
+      "source": [
+        "#### Eliminación de  columnas\n",
+        "\n",
+        "Hay al menos cuatro formas de eliminar una columna:\n",
+        "\n",
+        "* El método `.pop`\n",
+        "\n",
+        "* El método `.drop` con `axis = 1`\n",
+        "\n",
+        "* El método `.reindex`\n",
+        "\n",
+        "* Indexación con una lista de nuevas columnas\n",
+        "\n",
+        "El método `.pop` toma el nombre de una columna y lo elimina del data frame. Opera in-place. En lugar de devolver un data frame, devuelve la columna eliminada."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "zkVoEjYBIG2e"
+      },
+      "outputs": [],
+      "source": [
+        "#sales['subcat'] = 'Dairy'\n",
+        "#sales"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "0Qlehv3cIG2e"
+      },
+      "outputs": [],
+      "source": [
+        "# sales.pop('subcat')"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "LfVhRIs9IG2e"
+      },
+      "outputs": [],
+      "source": [
+        "#sales"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "OjFMqlfYIG2f"
+      },
+      "source": [
+        "Para quitar una columna con el método `.drop`, simplemente páselo (o una lista de nombres de columna) junto con la configuración del parámetro `axis` en 1:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 65,
+      "metadata": {
+        "id": "l5vVilDcIG2f",
+        "outputId": "791afc4a-4f9d-4ef6-8e5e-95494ccba0be",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "   A  C\n",
+            "0  1  7\n",
+            "1  2  8\n",
+            "2  3  9\n"
+          ]
+        }
+      ],
+      "source": [
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame\n",
+        "data = {\n",
+        "    'A': [1, 2, 3],\n",
+        "    'B': [4, 5, 6],\n",
+        "    'C': [7, 8, 9]\n",
+        "}\n",
+        "\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Remove a single column\n",
+        "df = df.drop('B', axis=1)\n",
+        "\n",
+        "# Display the updated DataFrame\n",
+        "print(df)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "O2oDUtpnIG2f"
+      },
+      "source": [
+        "#### Los dos métodos finales para eliminar columnas"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "3aCVKYlnIG2f"
+      },
+      "outputs": [],
+      "source": [
+        "#cols = ['Sales', 'Date']"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Z2ZOVSd7IG2f"
+      },
+      "outputs": [],
+      "source": [
+        "# sales.reindex(columns=cols)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "E7d-R71QIG2f"
+      },
+      "outputs": [],
+      "source": [
+        "#sales[cols]"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "DJTj7hElIG2f"
+      },
+      "source": [
+        "#### Recortes\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "gyUqKubYIG2f"
+      },
+      "outputs": [],
+      "source": [
+        "#sales.head()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "VfBmy1OXIG2g"
+      },
+      "outputs": [],
+      "source": [
+        "#sales.tail(2)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "8prUvE0vIG2g"
+      },
+      "source": [
+        "Usemos un índice basado en cadenas para que quede más claro qué hacen las opciones de recorte:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 66,
+      "metadata": {
+        "id": "2EDR7hlpIG2g",
+        "outputId": "495c542b-f462-43ab-fbf3-4e7938964d94",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "      column1  column2  column3\n",
+            "row1        1        6       11\n",
+            "row2        2        7       12\n",
+            "row3        3        8       13\n",
+            "row4        4        9       14\n",
+            "row5        5       10       15\n"
+          ]
+        }
+      ],
+      "source": [
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame with string-based index\n",
+        "data = {\n",
+        "    'column1': [1, 2, 3, 4, 5],\n",
+        "    'column2': [6, 7, 8, 9, 10],\n",
+        "    'column3': [11, 12, 13, 14, 15]\n",
+        "}\n",
+        "\n",
+        "index = ['row1', 'row2', 'row3', 'row4', 'row5']\n",
+        "\n",
+        "df = pd.DataFrame(data, index=index)\n",
+        "\n",
+        "# Display the DataFrame with string-based index\n",
+        "print(df)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "uoqCBryeIG2g"
+      },
+      "outputs": [],
+      "source": [
+        "# del sales['new_index']"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "piW1UnoRIG2g"
+      },
+      "outputs": [],
+      "source": [
+        "# df"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Whyg2jsSIG2g"
+      },
+      "source": [
+        "Para dividir por posición, usa el atributo `.iloc`. Aquí tomamos filas en las posiciones dos hasta cuatro, pero sin incluirlas:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "aCdVB-qaIG2g"
+      },
+      "outputs": [],
+      "source": [
+        "#df.iloc[2:4]"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "77GE8tmTIG2g"
+      },
+      "source": [
+        "También podemos proporcionar posiciones de columna que también queremos mantener. Las posiciones de las columnas deben seguir una coma en la operación de índice. Aquí mantenemos las filas desde dos hasta pero sin incluir la fila cuatro. También tomamos columnas desde cero hasta pero sin incluir uno (solo la columna en la posición de índice cero).\n",
+        "\n",
+        "Esto se expresa en la siguiente figura:\n",
+        "\n",
+        "\n",
+        "<img src=\"https://github.com/Josema1304/C8280/blob/main/recorte-pandas.png?raw=1\" alt=\"Drawing\" style=\"width: 500px;\"/>\n",
+        "\n",
+        "A continuación se muestra un resumen de las construcciones de  de data frame por posición y etiqueta.\n",
+        "\n",
+        "\n",
+        "```\n",
+        ".iloc [i: j]            Posición de filas i hasta pero sin incluir j (semiabierto)\n",
+        ".iloc [:, i: j]         Posición de las columnas i hasta pero sin incluir j (semiabierto)\n",
+        ".iloc [[i, k, m]]       Filas en i, k y m (no es un intervalo)\n",
+        ".loc [a: b]             Filas desde la etiqueta de índice a hasta b (cerrado)\n",
+        ".loc [:, c: d]          Columnas de la etiqueta de columna c a d (cerrado)\n",
+        ".loc [: [b, d, f]]      Columnas en las etiquetas b, d y f (no es un intervalo)\n",
+        "\n",
+        "```\n",
+        "\n",
+        "<img src=\"https://github.com/Josema1304/C8280/blob/main/recorte-ejemplo.png?raw=1\" alt=\"Drawing\" style=\"width: 600px;\"/>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Xfooo0RwIG2h"
+      },
+      "outputs": [],
+      "source": [
+        "#df = df.drop(['Category'], axis=1)\n",
+        "#df"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "zCh32TzxIG2h"
+      },
+      "outputs": [],
+      "source": [
+        "# df.iloc[2:4, 0:1]"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "4hHdfwL0IG2h"
+      },
+      "source": [
+        "También hay soporte para dividir datos por etiquetas. Usando el atributo `.loc`, podemos tomar valores de índice desde la `a` a la `d`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 67,
+      "metadata": {
+        "id": "N3Vh0wKCIG2h",
+        "outputId": "7a558f00-fba4-44f4-e245-00ac5c80201c",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "   column1  column2  column3\n",
+            "a        1        6       11\n",
+            "b        2        7       12\n",
+            "c        3        8       13\n",
+            "d        4        9       14\n"
+          ]
+        }
+      ],
+      "source": [
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame with index values\n",
+        "data = {\n",
+        "    'column1': [1, 2, 3, 4, 5],\n",
+        "    'column2': [6, 7, 8, 9, 10],\n",
+        "    'column3': [11, 12, 13, 14, 15]\n",
+        "}\n",
+        "\n",
+        "index = ['a', 'b', 'c', 'd', 'e']\n",
+        "\n",
+        "df = pd.DataFrame(data, index=index)\n",
+        "\n",
+        "# Split data by tags using .loc attribute\n",
+        "subset = df.loc['a':'d']\n",
+        "\n",
+        "# Display the subset of data\n",
+        "print(subset)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "_lHfs_l1IG2h"
+      },
+      "source": [
+        "Y al igual que `.iloc`, `.loc` tiene la capacidad de especificar columnas por etiqueta. En este ejemplo, solo tomamos la columna `Units` y, por lo tanto, devuelve una serie:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 68,
+      "metadata": {
+        "id": "_gRY1KQAIG2h",
+        "outputId": "c8835aae-5c03-4ee2-b772-67227ae4f18c",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "a    10\n",
+            "b    20\n",
+            "c    30\n",
+            "d    40\n",
+            "e    50\n",
+            "Name: Units, dtype: int64\n"
+          ]
+        }
+      ],
+      "source": [
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame with columns and index\n",
+        "data = {\n",
+        "    'Units': [10, 20, 30, 40, 50],\n",
+        "    'Sales': [100, 200, 300, 400, 500],\n",
+        "    'Profit': [50, 60, 70, 80, 90]\n",
+        "}\n",
+        "\n",
+        "index = ['a', 'b', 'c', 'd', 'e']\n",
+        "\n",
+        "df = pd.DataFrame(data, index=index)\n",
+        "\n",
+        "# Select specific columns using .loc attribute\n",
+        "subset = df.loc[:, 'Units']\n",
+        "\n",
+        "# Display the subset as a series\n",
+        "print(subset)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "TOixXP3nIG2h"
+      },
+      "source": [
+        "Sacamos las columnas `UPC` y `Sales`, pero con solo los últimos 4 valores:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 70,
+      "metadata": {
+        "id": "yONdP32eIG2h",
+        "outputId": "b7d0bc27-d21e-45a4-d894-34abd39f118f",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "    UPC  Sales\n",
+            "b  B456    200\n",
+            "c  C789    300\n",
+            "d  D012    400\n",
+            "e  E345    500\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create a DataFrame with columns and index\n",
+        "data = {\n",
+        "    'UPC': ['A123', 'B456', 'C789', 'D012', 'E345'],\n",
+        "    'Sales': [100, 200, 300, 400, 500],\n",
+        "    'Profit': [50, 60, 70, 80, 90]\n",
+        "}\n",
+        "\n",
+        "index = ['a', 'b', 'c', 'd', 'e']\n",
+        "\n",
+        "df = pd.DataFrame(data, index=index)\n",
+        "\n",
+        "# Select specific columns with last 4 values using .loc attribute\n",
+        "subset = df.loc['b':, ['UPC', 'Sales']]\n",
+        "\n",
+        "# Display the subset\n",
+        "print(subset)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "B7n_sZSRZAOZ"
+      },
+      "source": [
+        "### Merge/Join\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "E-2aVs4aY0Vr"
+      },
+      "outputs": [],
+      "source": [
+        "data = {\n",
+        "        'emp_id': ['1', '2', '3', '4', '5'],\n",
+        "        'primer_nombre': ['Jason', 'Andy', 'Allen', 'John', 'Amy'],\n",
+        "        'ultimo_nombre': ['Larkin', 'Jacob', 'A', 'AA', 'Jackson']}\n",
+        "df_1 = pd.DataFrame(data, columns = ['emp_id', 'primer_nombre', 'ultimo_nombre'])\n",
+        "print (df_1)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "jA72OR5JZZ6f"
+      },
+      "outputs": [],
+      "source": [
+        "data = {\n",
+        "        'emp_id': ['4', '5', '6', '7'],\n",
+        "        'primer_nombre': ['James', 'Shize', 'Kim', 'Jose'],\n",
+        "        'ultimo_nombre': ['Alexander', 'Suma', 'Mike', 'G']}\n",
+        "df_2 = pd.DataFrame(data, columns = ['emp_id', 'primer_nombre', 'ultimo_nombre'])\n",
+        "print (df_2)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "FR8uGPpNZlgO"
+      },
+      "outputs": [],
+      "source": [
+        "# usando concat\n",
+        "df = pd.concat([df_1, df_2])\n",
+        "print(df)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "IfJmK4rLZ5-X"
+      },
+      "outputs": [],
+      "source": [
+        "# Juntando dos dataframes a lo largo de las columnas\n",
+        "pd.concat([df_1,df_2], axis=1)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Dob92Mh8cy-Q"
+      },
+      "source": [
+        "Combinamos dos dataframes basados en el valor `emp_id` en este caso, solo se unirán los `emp_id` presentes en ambas tablas."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Qm6FdoJBbf8z"
+      },
+      "outputs": [],
+      "source": [
+        "print(pd.merge(df_1,df_2, on='emp_id'))"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "0_0FPmAtm7l_"
+      },
+      "source": [
+        "### Grouping\n",
+        "\n",
+        "\n",
+        "Pandas nos brinda la capacidad de agrupar data frames por valores de columna y luego fusionarlos nuevamente en un resultado con el método `.groupby`.\n",
+        "Pandas `group by` nos permitirá lograr lo siguiente:\n",
+        "\n",
+        "- Aplicar una función de agregación a cada grupo de forma independiente\n",
+        "- Según algunos criterios, divide los datos en grupos.\n",
+        "- Combinar los resultados del `group by` en una estructura de datos.\n",
+        "\n",
+        "\n",
+        "<img src=\"https://github.com/Josema1304/C8280/blob/main/Groupby.png?raw=1\" alt=\"Drawing\" style=\"width: 700px;\"/>\n",
+        "\n",
+        "Como ejemplo, en el data frame `scores`, calcularemos las puntuaciones medias de cada maestro. Primero llamamos a `.groupby` y entonces invocamos a `.median` en el resultado:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "MCnmDXlRIG2j"
+      },
+      "outputs": [],
+      "source": [
+        "#scores = pd.DataFrame({\n",
+        "#    'name':['Adam', 'Bob', 'Dave', 'Fred'],\n",
+        "#    'age': [15, 16, 16, 15],\n",
+        "#    'test1': [95, 81, 89, None],\n",
+        "#    'test2': [80, 82, 84, 88],\n",
+        "#    'teacher': ['Ashby', 'Ashby', 'Jones', 'Jones']})"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 72,
+      "metadata": {
+        "id": "KIuReBX1IG2j",
+        "outputId": "adbccdbc-a94d-4824-baa4-c4c3d9899ced",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "          age  test1  test2\n",
+            "teacher                    \n",
+            "Ashby    15.5   88.0   81.0\n",
+            "Jones    16.0   89.0   86.0\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "<ipython-input-72-c61e04942a9d>:14: FutureWarning: The default value of numeric_only in DataFrameGroupBy.median is deprecated. In a future version, numeric_only will default to False. Either specify numeric_only or select only columns which should be valid for the function.\n",
+            "  average_scores = scores.groupby('teacher').median()\n"
+          ]
+        }
+      ],
+      "source": [
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create the DataFrame 'scores'\n",
+        "scores = pd.DataFrame({\n",
+        "    'name': ['Adam', 'Bob', 'Dave', 'Fred'],\n",
+        "    'age': [15, 16, 16, 16],\n",
+        "    'test1': [95, 81, 89, 89],\n",
+        "    'test2': [80, 82, 84, 88],\n",
+        "    'teacher': ['Ashby', 'Ashby', 'Jones', 'Jones']\n",
+        "})\n",
+        "\n",
+        "# Calculate the average scores for each teacher using groupby and median\n",
+        "average_scores = scores.groupby('teacher').median()\n",
+        "\n",
+        "# Display the average scores\n",
+        "print(average_scores)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "UJ_4BwU4IG2j"
+      },
+      "source": [
+        "Esto incluyó la columna `age`, para ignorar que podemos separar solo las columnas de prueba:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 73,
+      "metadata": {
+        "id": "C2FdiYkcIG2j",
+        "outputId": "4d18ed24-ce83-4716-c696-95bee2720361",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "         test1  test2\n",
+            "teacher              \n",
+            "Ashby     88.0   81.0\n",
+            "Jones     89.0   86.0\n"
+          ]
+        }
+      ],
+      "source": [
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create the DataFrame 'scores'\n",
+        "scores = pd.DataFrame({\n",
+        "    'name': ['Adam', 'Bob', 'Dave', 'Fred'],\n",
+        "    'age': [15, 16, 16, 16],\n",
+        "    'test1': [95, 81, 89, 89],\n",
+        "    'test2': [80, 82, 84, 88],\n",
+        "    'teacher': ['Ashby', 'Ashby', 'Jones', 'Jones']\n",
+        "})\n",
+        "\n",
+        "# Select only the test columns\n",
+        "test_scores = scores[['test1', 'test2', 'teacher']]\n",
+        "\n",
+        "# Calculate the average scores for each teacher using groupby and median\n",
+        "average_scores = test_scores.groupby('teacher').median()\n",
+        "\n",
+        "# Display the average scores\n",
+        "print(average_scores)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "uXYyBq66IG2j"
+      },
+      "source": [
+        "Para encontrar los valores medianos de cada grupo de edad para cada maestro, simplemente agrupa por maestro y edad:\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 74,
+      "metadata": {
+        "id": "F6YpywlfIG2j",
+        "outputId": "e503b138-da05-4951-f606-77184368087e",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "             test1  test2\n",
+            "teacher age              \n",
+            "Ashby   15    95.0   80.0\n",
+            "        16    81.0   82.0\n",
+            "Jones   16    89.0   86.0\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "<ipython-input-74-d1a32101e7af>:14: FutureWarning: The default value of numeric_only in DataFrameGroupBy.median is deprecated. In a future version, numeric_only will default to False. Either specify numeric_only or select only columns which should be valid for the function.\n",
+            "  median_scores = scores.groupby(['teacher', 'age']).median()\n"
+          ]
+        }
+      ],
+      "source": [
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create the DataFrame 'scores'\n",
+        "scores = pd.DataFrame({\n",
+        "    'name': ['Adam', 'Bob', 'Dave', 'Fred'],\n",
+        "    'age': [15, 16, 16, 16],\n",
+        "    'test1': [95, 81, 89, 89],\n",
+        "    'test2': [80, 82, 84, 88],\n",
+        "    'teacher': ['Ashby', 'Ashby', 'Jones', 'Jones']\n",
+        "})\n",
+        "\n",
+        "# Calculate the median values for each age group for each teacher\n",
+        "median_scores = scores.groupby(['teacher', 'age']).median()\n",
+        "\n",
+        "# Display the median scores\n",
+        "print(median_scores)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "MgIFsd-aIG2k"
+      },
+      "source": [
+        "Si queremos los puntajes mínimos y máximos de las pruebas por maestro, usamos el método `.agg` y pasamos una lista de funciones para llamar:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 75,
+      "metadata": {
+        "id": "3kDX0JkSIG2k",
+        "outputId": "ae4c1351-d8ea-4048-e3e7-8817be380011",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "        test1     test2    \n",
+            "          min max   min max\n",
+            "teacher                    \n",
+            "Ashby      81  95    80  82\n",
+            "Jones      89  89    84  88\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "<ipython-input-75-acdc75847a15>:14: FutureWarning: Indexing with multiple keys (implicitly converted to a tuple of keys) will be deprecated, use a list instead.\n",
+            "  min_max_scores = scores.groupby('teacher')['test1', 'test2'].agg(['min', 'max'])\n"
+          ]
+        }
+      ],
+      "source": [
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create the DataFrame 'scores'\n",
+        "scores = pd.DataFrame({\n",
+        "    'name': ['Adam', 'Bob', 'Dave', 'Fred'],\n",
+        "    'age': [15, 16, 16, 16],\n",
+        "    'test1': [95, 81, 89, 89],\n",
+        "    'test2': [80, 82, 84, 88],\n",
+        "    'teacher': ['Ashby', 'Ashby', 'Jones', 'Jones']\n",
+        "})\n",
+        "\n",
+        "# Calculate the minimum and maximum test scores per teacher\n",
+        "min_max_scores = scores.groupby('teacher')['test1', 'test2'].agg(['min', 'max'])\n",
+        "\n",
+        "# Display the minimum and maximum scores\n",
+        "print(min_max_scores)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "xTKfQIfVIG2k"
+      },
+      "source": [
+        "**Ejercicio**"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "pK19Cxsgm0nh"
+      },
+      "outputs": [],
+      "source": [
+        "df = pd.DataFrame({'Nombre' : ['jack', 'jane', 'jack', 'jane', 'jack', 'jane', 'jack', 'jane'],\n",
+        "                   'Estado' : ['SFO', 'SFO', 'NYK', 'CA', 'NYK', 'NYK', 'SFO', 'CA'],\n",
+        "                   'Genero':['A','A','B','A','C','B','C','A'],\n",
+        "                   'Edad' : np.random.uniform(24, 50, size=8),\n",
+        "                   'Salario' : np.random.uniform(3000, 5000, size=8),})"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "jHjOj4Zxnz8r"
+      },
+      "source": [
+        "Ten en cuenta que las columnas se ordenan automáticamente en su orden alfabético para un orden personalizado, usa el siguiente código_\n",
+        "\n",
+        "`df = pd.DataFrame (data, columns = ['Nombre', 'Estado', 'Edad', 'Salario'])`\n",
+        "\n",
+        "* Calcula la suma por nombres.\n",
+        "\n",
+        "* Encuentra la edad máxima y el salario por nombre/ estado. Puedes usar todas las funciones agregadas, como mínimo, máximo, media, conteo, suma acumulada."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 84,
+      "metadata": {
+        "id": "eVwMPRL7oWCp",
+        "outputId": "fdfdecf8-8934-4d6f-f699-684fb5a12740",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "             Age        Salary\n",
+            "Name                          \n",
+            "jack  204.197033  21708.963377\n",
+            "jane  200.092515  22987.726260\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "<ipython-input-84-26261a3cadbb>:13: FutureWarning: The default value of numeric_only in DataFrameGroupBy.sum is deprecated. In a future version, numeric_only will default to False. Either specify numeric_only or select only columns which should be valid for the function.\n",
+            "  sum_by_names = df.groupby('Name').sum()\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Tus  respuestas\n",
+        "import pandas as pd\n",
+        "import numpy as np\n",
+        "\n",
+        "df = pd.DataFrame({\n",
+        "    'Name': ['jack', 'jane', 'jack', 'jane', 'jack', 'jane', 'jack', 'jane', 'jack', 'jane'],\n",
+        "    'State': ['SFO', 'SFO', 'NYK', 'CA', 'NYK', 'NYK', 'NYK', 'SFO', 'CA', 'CA'],\n",
+        "    'Gender': ['A', 'A', 'B', 'A', 'C', 'B', 'C', 'A', 'B', 'A'],\n",
+        "    'Age': np.random.uniform(24, 50, size=10),\n",
+        "    'Salary': np.random.uniform(3000, 5000, size=10)\n",
+        "})\n",
+        "\n",
+        "sum_by_names = df.groupby('Name').sum()\n",
+        "print(sum_by_names)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "max_age_salary = df.groupby(['Name', 'State']).max()[['Age', 'Salary']]\n",
+        "print(max_age_salary)"
+      ],
+      "metadata": {
+        "id": "ZbW7ykLEtdZ0",
+        "outputId": "29204d84-55bb-4dda-f379-8f66177e6e3c",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 85,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "                  Age       Salary\n",
+            "Name State                        \n",
+            "jack CA     48.719668  4922.617733\n",
+            "     NYK    48.987706  4658.478740\n",
+            "     SFO    48.012322  3710.089503\n",
+            "jane CA     45.589393  4786.732119\n",
+            "     NYK    48.303520  4784.437245\n",
+            "     SFO    41.441226  4707.005840\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "kn_bSynhpVw9"
+      },
+      "source": [
+        "#### Tablas pivot\n",
+        "\n",
+        "Pandas proporciona una función `pivot_table` para crear una tabla pivot (dinámica )de estilo de hoja de cálculo de MS-Excel. Puede tomar los siguientes argumentos:\n",
+        "\n",
+        "- `data`: objeto DataFrame\n",
+        "- `values`: columna para agregar\n",
+        "- `index`: etiquetas de fila\n",
+        "- `columns`: etiquetas de columna\n",
+        "- `aggfunc`: función de agregación que se usará en valores, el valor predeterminado es `NumPy.mean`.\n",
+        "\n",
+        "Usando una tabla pivot, podemos generalizar ciertos comportamientos grupales. Para obtener las puntuaciones medias de los profesores, podemos ejecutar lo siguiente:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 79,
+      "metadata": {
+        "id": "beYXE2xKIG2l",
+        "outputId": "9d73fcd0-025b-4164-d57d-7097c0662dfa",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "         test1  test2\n",
+            "teacher              \n",
+            "Ashby       88     81\n",
+            "Jones       89     86\n"
+          ]
+        }
+      ],
+      "source": [
+        "# completar\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create the DataFrame 'scores'\n",
+        "scores = pd.DataFrame({\n",
+        "    'name': ['Adam', 'Bob', 'Dave', 'Fred'],\n",
+        "    'age': [15, 16, 16, 16],\n",
+        "    'test1': [95, 81, 89, 89],\n",
+        "    'test2': [80, 82, 84, 88],\n",
+        "    'teacher': ['Ashby', 'Ashby', 'Jones', 'Jones']\n",
+        "})\n",
+        "\n",
+        "# Create a pivot table to calculate the mean scores of the teachers\n",
+        "mean_scores = pd.pivot_table(scores, values=['test1', 'test2'], index='teacher', aggfunc='mean')\n",
+        "\n",
+        "# Display the mean scores\n",
+        "print(mean_scores)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "t1f2aUSTq8uL"
+      },
+      "source": [
+        "Si queremos agregar por maestro y edad, simplemente usamos una lista con ambos para el parámetro `index`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Mx2WCN3cIG2l"
+      },
+      "outputs": [],
+      "source": [
+        "#scores.pivot_table(index=['teacher', 'age'],\n",
+        "#                   values=['test1', 'test2'],\n",
+        "#                   aggfunc='median')"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "mZL4zdh-IG2l"
+      },
+      "source": [
+        "Si queremos aplicar múltiples funciones, simplemente usa una lista de ellas. Aquí, analizamos los puntajes mínimos y máximos de las pruebas por maestro:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "1VWjv_SkIG2l"
+      },
+      "outputs": [],
+      "source": [
+        "#scores.pivot_table(index='teacher',\n",
+        "#                   values=['test1', 'test2'],\n",
+        "#                   aggfunc=[min, max])"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "n6ZlQu8uIG2l"
+      },
+      "source": [
+        "Podemos ver que la tabla pivot y de grupo por comportamiento son muy similares. Hay del estilo declarativo de `.pivot_table` y el estilo  semántico de los grupos.\n",
+        "\n",
+        "Una característica adicional de las tablas pivots es la capacidad de agregar filas de resumen. Simplemente estableciendo `margins= True` obtenemos esta funcionalidad:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "NARhoS91IG2l"
+      },
+      "outputs": [],
+      "source": [
+        "#scores.pivot_table(index='teacher',\n",
+        "#                   values=['test1', 'test2'],\n",
+        "#                   aggfunc='median', margins=True)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "9jyvQopHIG2m"
+      },
+      "source": [
+        "<img src=\"https://github.com/Josema1304/C8280/blob/main/pivot.png?raw=1\" alt=\"Drawing\" style=\"width: 700px;\"/>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "UPkcGcewIG2m"
+      },
+      "outputs": [],
+      "source": [
+        "#scores.pivot_table(index= ['teacher', 'age'],\n",
+        "#                   values=['test1', 'test2'],\n",
+        "#                   aggfunc=[len, sum], margins=True)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "_mY4tSnUIG2m"
+      },
+      "source": [
+        "<img src=\"https://github.com/Josema1304/C8280/blob/main/pivot-parameters.png?raw=1\" alt=\"Drawing\" style=\"width: 700px;\"/>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "5HWIeENCIG2m"
+      },
+      "source": [
+        "**Ejercicio** Del dataframe anterior agrupa por estado y nombre y encuentre la edad media para cada grado.\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 83,
+      "metadata": {
+        "id": "sHNoWWRIIG2m",
+        "outputId": "f9fa813c-2fff-4e3e-9310-cb6dfab34caf",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Grade          A     B     C\n",
+            "State Name                  \n",
+            "CA    jack   NaN  30.0   NaN\n",
+            "      jane  30.5   NaN   NaN\n",
+            "NYK   jack   NaN  32.0  31.0\n",
+            "      jane   NaN  31.0   NaN\n",
+            "SFO   jack  25.0   NaN   NaN\n",
+            "      jane  27.5   NaN   NaN\n"
+          ]
+        }
+      ],
+      "source": [
+        "## Tu respuesta\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Create the DataFrame 'scores'\n",
+        "scores = pd.DataFrame({\n",
+        "    'Name': ['jack', 'jane', 'jack', 'jane', 'jack', 'jane', 'jack', 'jane', 'jack', 'jane'],\n",
+        "    'State': ['SFO', 'SFO', 'NYK', 'CA', 'NYK', 'NYK', 'NYK', 'SFO', 'CA', 'CA'],\n",
+        "    'Grade': ['A', 'A', 'B', 'A', 'C', 'B', 'C', 'A', 'B', 'A'],\n",
+        "    'Age': [25, 28, 32, 35, 29, 31, 33, 27, 30, 26]\n",
+        "})\n",
+        "\n",
+        "# Create a pivot table to find the average age for each grade, grouped by state and name\n",
+        "average_age_by_grade = pd.pivot_table(scores, values='Age', index=['State', 'Name'], columns='Grade', aggfunc='mean')\n",
+        "\n",
+        "# Display the average age by grade, grouped by state and name\n",
+        "print(average_age_by_grade)\n",
+        "\n"
+      ]
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.7.10"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
